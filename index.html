@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guia da Roça</title>
+<meta name="theme-color" content="#1f6b3a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: caderno de campo do agricultor, direto e prático
+   IDEA: um manual de bolso de extensão rural
+   PICTURE: folhas desenhadas no topo; a ferramenta logo abaixo
+   COLOUR and TYPE: verde-mata, terra, amarelo-urucum; Nunito
+   LAYOUT: abas no topo, uma coluna calma, cartões que abrem */
+:root{color-scheme:light dark;--bg:light-dark(#f4f7f1,#0f1a12);--card:light-dark(#fff,#18261b);--ink:light-dark(#17261a,#e6efe4);--mut:light-dark(#566a59,#9fb5a2);--g:#1f6b3a;--g2:light-dark(#dcebd9,#21402a);--ac:#e39a1c;--line:light-dark(#d6e2d3,#2a3d2e);--warn:light-dark(#9a3412,#fdba74)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Nunito,system-ui,sans-serif;overflow-x:clip}
+header{background:var(--g);color:#fff;padding:22px max(5vw,16px) 0;position:relative;overflow:hidden}
+header h1{margin:0;font-size:clamp(30px,6vw,44px);line-height:1.05;font-weight:800}
+header p{margin:6px 0 16px;opacity:.9;max-width:60ch}
+header svg{position:absolute;right:-10px;top:-10px;width:180px;height:180px;opacity:.25}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{flex:none;border:0;background:transparent;color:#fff;font:inherit;font-weight:700;padding:12px 14px;border-radius:12px 12px 0 0;min-height:44px;cursor:pointer;opacity:.85}
+nav button.on{background:var(--bg);color:var(--g);opacity:1}
+:root[data-theme=dark] nav button.on{color:#8fd19e}
+main{max-width:860px;margin:0 auto;padding:20px max(4vw,14px) 60px}
+h2{font-size:24px;margin:0 0 6px}h3{margin:0;font-size:18px}
+.mut{color:var(--mut);font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0}
+input,select,textarea{font:inherit;font-size:16px;width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:44px}
+.b{font:inherit;font-weight:700;border:0;border-radius:10px;padding:11px 16px;min-height:44px;background:var(--g);color:#fff;cursor:pointer}
+.b2{background:var(--g2);color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.chips button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer}
+.chips button.on{background:var(--g);border-color:var(--g);color:#fff}
+.q{font-weight:800;margin-top:6px}
+.photo{width:100%;max-height:320px;object-fit:cover;border-radius:12px;display:block;margin:10px 0}
+details.card summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"+";font-weight:800;font-size:22px;color:var(--g)}
+details[open].card summary::after{content:"–"}
+.sci{font-style:italic;color:var(--mut);font-size:14px}
+dl{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:6px 12px;margin:12px 0 0}
+dt{font-weight:800;color:var(--g)}:root[data-theme=dark] dt{color:#8fd19e}dd{margin:0}
+@media(max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+.tag{display:inline-block;background:var(--g2);border-radius:6px;padding:1px 8px;font-size:13px;margin-right:4px}
+.alert{color:var(--warn);font-weight:700}
+.score{font-weight:800;color:var(--ac);white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.mine{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:start}
+.mine img,.mine .ph{width:96px;height:96px;border-radius:10px;object-fit:cover;background:var(--g2)}
+.due{color:#fff;background:var(--ac);border-radius:6px;padding:1px 8px;font-size:13px;font-weight:800}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.match{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;align-items:center;cursor:pointer}
+.match img{width:72px;height:72px;border-radius:10px;object-fit:cover}
+.ia{border:2px solid var(--g);}
+.box{background:var(--g2);border-radius:12px;padding:12px 14px;margin:10px 0}
+.ok{color:var(--g);font-weight:800}:root[data-theme=dark] .ok{color:#8fd19e}
+label.b{display:inline-flex;align-items:center}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 95C50 60 20 40 10 10c35 5 60 30 40 85Z" fill="#fff"/><path d="M52 95C55 55 80 40 92 20c-5 35-20 60-40 75Z" fill="#fff"/></svg>
+<h1>Guia da Roça</h1>
+<p>Identificar, plantar, cuidar e resolver problemas. Funciona sem internet depois de aberto.</p>
+<button class="b b2" id="instbtn" hidden style="margin:0 0 14px">Instalar no celular</button>
+<nav id="tabs">
+<button data-t="id" class="on">Identificar</button>
+<button data-t="banco">Meu banco</button>
+<button data-t="guia">Plantas</button>
+<button data-t="prob">Problemas</button>
+<button data-t="cal">Calendário</button>
+<button data-t="minhas">Minhas plantas</button>
+</nav>
+</header>
+<main>
+
+<section id="id">
+<h2>Que planta é essa?</h2>
+<p class="mut">Tire ou escolha uma foto. Com internet, a IA identifica e tudo fica salvo no seu banco. Sem internet, o app procura a planta nas fotos que você já salvou.</p>
+<input type="file" id="idfoto" accept="image/*" capture="environment" aria-label="Foto da planta">
+<img id="idprev" class="photo" alt="Sua foto" hidden>
+<div id="offres"></div>
+<div class="card ia">
+<h3>Com internet: identificar pela foto</h3>
+<p class="mut" id="iainfo" style="margin:4px 0 10px">Verificando se a identificação por IA está disponível…</p>
+<button class="b" id="iabtn" hidden>Identificar com IA</button>
+<p id="iamsg" class="mut" style="margin:8px 0 0"></p>
+<details id="pnbox" class="box" hidden><summary style="cursor:pointer;font-weight:800">Chave da Pl@ntNet (grátis)</summary>
+<ol style="padding-left:20px;margin:8px 0">
+<li>Crie uma conta grátis em <a href="https://my.plantnet.org" target="_blank" rel="noopener">my.plantnet.org</a> (my.plantnet.org).</li>
+<li>Em "API key", gere sua chave privada e copie.</li>
+<li>Na mesma página, autorize o domínio <b id="pndom"></b> para uso no navegador.</li>
+<li>Cole a chave aqui e salve. Grátis até 500 fotos por dia.</li>
+</ol>
+<div class="row"><input id="pnkey" placeholder="Cole sua chave aqui" aria-label="Chave da Pl@ntNet" style="flex:1 1 200px"><button class="b" id="pnsave">Salvar chave</button></div>
+<p class="mut" style="margin:8px 0 0">A chave fica salva só neste aparelho. A Pl@ntNet dá o nome da planta; os cuidados vêm do guia offline quando a planta está nele.</p>
+</details>
+</div>
+<div id="iares"></div>
+<h2 style="margin-top:22px">Sem foto reconhecida? Responda</h2>
+<p class="mut">Responda o que você vê e o app compara com as plantas do guia.</p>
+<div id="qs"></div>
+<div class="row"><button class="b" id="idgo">Ver resultado</button><button class="b b2" id="idclr">Limpar</button></div>
+<div id="idres"></div>
+</section>
+
+<section id="banco" hidden>
+<h2>Meu banco de fotos</h2>
+<p class="mut">Todas as plantas identificadas ficam aqui, com foto e cuidados, e dá para ver tudo sem internet.</p>
+<input id="bbusca" placeholder="Buscar no banco" aria-label="Buscar no banco">
+<p class="mut" id="bcount"></p>
+<div id="blista"></div>
+<div class="card">
+<h3>Juntar os bancos (link ↔ arquivo offline)</h3>
+<p class="mut" style="margin:4px 0 10px">O app pelo link e o arquivo offline guardam os dados separados. Exporte de um e importe no outro: as fotos e as plantas se juntam, sem duplicar.</p>
+<div class="row"><button class="b" id="bexp">Exportar banco</button><label class="b b2" for="bimp" tabindex="0">Importar banco</label><input type="file" id="bimp" accept=".json,application/json" hidden></div>
+<p class="mut" id="bmsg"></p>
+</div>
+</section>
+
+<section id="guia" hidden>
+<h2>Guia de plantas</h2>
+<p class="mut">Toque numa planta para ver como plantar, cuidar e colher.</p>
+<input id="busca" placeholder="Buscar: tomate, açaí, folha amarela…" aria-label="Buscar planta">
+<div class="chips" id="filtros"></div>
+<div id="lista"></div>
+</section>
+
+<section id="prob" hidden>
+<h2>Minha planta está com problema</h2>
+<p class="mut">Escolha o que você está vendo.</p>
+<div id="probs"></div>
+<h2 style="margin-top:24px">Receitas caseiras</h2>
+<div id="receitas"></div>
+</section>
+
+<section id="cal" hidden>
+<h2>Quando plantar</h2>
+<p class="mut">Pensado para o clima da Amazônia (ex.: Santarém): chuvas fortes de dezembro a maio e verão mais seco de julho a novembro. Em outras regiões, ajuste pela sua época de chuva.</p>
+<div id="calbox"></div>
+</section>
+
+<section id="minhas" hidden>
+<h2>Minhas plantas</h2>
+<p class="mut">Guarde suas plantas com foto e o app avisa quando é dia de regar. Fica salvo só neste aparelho e navegador.</p>
+<div class="card">
+<input type="file" id="mfoto" accept="image/*" capture="environment" aria-label="Foto">
+<div class="row" style="margin-top:8px">
+<input id="mnome" list="nomes" placeholder="Nome (ex.: Tomate do quintal)" style="flex:2 1 200px">
+<label style="flex:1 1 140px">Regar a cada <input id="mdias" type="number" min="1" value="2" style="width:80px;display:inline-block"> dias</label>
+</div>
+<datalist id="nomes"></datalist>
+<button class="b" id="madd" style="margin-top:10px">Salvar planta</button>
+<p class="mut" id="mmsg"></p>
+</div>
+<div id="mlista"></div>
+</section>
+</main>
+
+<script>
+{
+const P=[
+{n:"Mandioca / macaxeira",c:"Manihot esculenta",t:"raiz",h:"arbusto",f:"recortada",k:["verde"],rec:"Folha em forma de mão com 5 a 7 dedos compridos, caule com 'nós' marcados, talo da folha às vezes avermelhado.",pl:"Manivas (pedaços do caule) de 15–20 cm com 5–7 gemas, deitadas ou inclinadas a 10 cm de fundura. Espaço 1 m × 1 m.",ep:"Início das chuvas (dez–fev). Em várzea, na vazante.",luz:"Sol pleno.",ag:"Aguenta seca. Não suporta encharcamento: em terra que alaga, plante em leirões.",so:"Solo solto e drenado. Esterco ou composto na cova ajuda; pouco nitrogênio para não dar só rama.",co:"Mansa: 8–12 meses. Brava: 12–18 meses.",pr:"Mandarová (lagarta grande: catar à mão), ácaro no verão, podridão da raiz em solo encharcado.",dc:"A mandioca brava tem veneno (ácido cianídrico): só consuma processada, como farinha, tucupi bem fervido ou goma."},
+{n:"Açaí",c:"Euterpe oleracea",t:"fruteira",h:"palmeira",f:"recortada",k:["roxo","verde"],rec:"Palmeira fina que forma touceira (vários troncos juntos), folhas como penas, cachos de frutinhos redondos roxo-escuros.",pl:"Mudas de 6–8 meses em covas de 40 cm, espaço 5 × 5 m. Sementes despolpadas germinam em 20–50 dias.",ep:"Início das chuvas.",luz:"Sol; quando muda, tolera meia-sombra.",ag:"Gosta de muita água (várzea). Em terra firme, irrigar no verão.",so:"Rico em matéria orgânica. Composto, esterco e cinza ao redor da touceira.",co:"Começa com 3–4 anos. Safra principal no verão (ago–dez).",pr:"Fungos nas folhas e lagartas; retire folhas secas e doentes.",dc:"Deixe 3 a 5 troncos por touceira e corte os excedentes (palmito) para produzir mais."},
+{n:"Cupuaçu",c:"Theobroma grandiflorum",t:"fruteira",h:"arvore",f:"larga",k:["marrom"],rec:"Folhas grandes, compridas, com pelinhos ferrugem embaixo. Fruto grande, oval, casca marrom dura e aveludada.",pl:"Mudas em covas de 50 cm, espaço 6 × 6 m. Bom consorciado com banana ou mandioca dando sombra no início.",ep:"Início das chuvas.",luz:"Meia-sombra quando jovem; depois sol.",ag:"Regar no verão nos 2 primeiros anos.",so:"Profundo, com matéria orgânica. Adubar com composto 2× por ano.",co:"A partir de 3–4 anos. O fruto cai maduro: colha do chão.",pr:"Vassoura-de-bruxa (galhos inchados e secos): podar e queimar. Broca-do-fruto.",dc:"Prefira mudas enxertadas de clones resistentes à vassoura-de-bruxa."},
+{n:"Cacau",c:"Theobroma cacao",t:"fruteira",h:"arvore",f:"larga",k:["amarelo","vermelho","laranja"],rec:"Folhas grandes e lisas; flores e frutos nascem direto no tronco. Fruto oval com gomos, amarelo ou vermelho.",pl:"Mudas em covas de 40 cm, espaço 3 × 3 m, com sombra provisória de banana.",ep:"Início das chuvas.",luz:"Meia-sombra.",ag:"Constante, sem encharcar.",so:"Fértil e fundo. Composto e cobertura de folhas no chão.",co:"A partir de 3 anos.",pr:"Vassoura-de-bruxa e podridão-parda: retirar e enterrar frutos doentes.",dc:"Mantenha a folhada no chão: protege raízes e alimenta o solo."},
+{n:"Banana",c:"Musa spp.",t:"fruteira",h:"erva",f:"larga",k:["verde","amarelo","roxo"],rec:"Folhas enormes inteiras que rasgam com o vento; 'tronco' formado por bainhas. Coração roxo na ponta do cacho.",pl:"Filhote (chifrinho) em cova de 40 × 40 cm, espaço 3 × 3 m.",ep:"Início das chuvas, ou o ano todo com irrigação.",luz:"Sol pleno.",ag:"Muita água, sem encharcar.",so:"Muita matéria orgânica e potássio (cinza, casca de banana, esterco).",co:"12–15 meses. Colha quando as quinas da fruta arredondam.",pr:"Sigatoka (manchas nas folhas), mal-do-panamá (folhas amarelas e tronco rachado: arrancar), broca.",dc:"Deixe só 3 por touceira: mãe, filha e neta. Corte a planta que já deu cacho."},
+{n:"Mamão",c:"Carica papaya",t:"fruteira",h:"arvore",f:"recortada",k:["verde","amarelo","laranja"],rec:"Tronco único sem galhos, folhas muito recortadas no topo com talo comprido e oco. Frutos colados no tronco.",pl:"Sementes em saquinhos; transplante com 15–20 cm. Espaço 3 × 2 m.",ep:"Ano todo; evite transplantar em encharcado.",luz:"Sol pleno.",ag:"Regular, mas nunca encharcar (apodrece o pé).",so:"Drenado e fértil. Esterco na cova e a cada 2 meses.",co:"8–10 meses após o plantio.",pr:"Mosaico/virose (folhas enrugadas e manchadas: arrancar e queimar), ácaros.",dc:"Plante 3 mudas por cova e deixe a de flor hermafrodita (fruto comprido), que é a mais produtiva."},
+{n:"Maracujá",c:"Passiflora edulis",t:"fruteira",h:"trepadeira",f:"recortada",k:["amarelo","branco","roxo"],rec:"Trepadeira com gavinhas (molinhas). Folha com 3 pontas. Flor grande com franja roxa e branca.",pl:"Mudas ao pé de espaldeira ou latada de 2 m de altura. Espaço 3 m entre plantas.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Regular, mais na floração.",so:"Fértil, drenado. Esterco na cova e cobertura a cada 2 meses.",co:"6–9 meses após o plantio.",pr:"Lagartas nas folhas, fusariose (murcha), percevejo.",dc:"Quem poliniza é a mamangava (abelha grande preta). Não use veneno na floração; se faltar abelha, polinize à mão à tarde."},
+{n:"Abacaxi",c:"Ananas comosus",t:"fruteira",h:"erva",f:"estreita",k:["amarelo","verde","laranja"],rec:"Roseta de folhas compridas, duras e com espinhos na borda; fruto no centro.",pl:"Filhotes ou a coroa (deixar secar 2 dias). Espaço 90 × 30 cm.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Aguenta seca; não encharcar.",so:"Arenoso, bem drenado, levemente ácido.",co:"14–20 meses.",pr:"Cochonilha na base (murcha), podridão em solo encharcado.",dc:"A coroa de um abacaxi comprado também vira muda."},
+{n:"Manga",c:"Mangifera indica",t:"fruteira",h:"arvore",f:"estreita",k:["verde","amarelo","vermelho","laranja"],rec:"Árvore grande, copa densa. Folhas compridas e estreitas, novas avermelhadas. Cheiro de manga ao amassar.",pl:"Muda enxertada em cova de 60 cm, espaço 8 × 8 m.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Regar nos 2 primeiros anos. Um verão seco ajuda a florir.",so:"Profundo. Composto e esterco 2× por ano.",co:"Enxertada: 3–4 anos.",pr:"Antracnose (manchas pretas em flores e frutos), mosca-das-frutas.",dc:"Pode a copa depois da colheita para manter baixa e arejada."},
+{n:"Caju",c:"Anacardium occidentale",t:"fruteira",h:"arvore",f:"larga",k:["amarelo","vermelho","laranja"],rec:"Folhas arredondadas e duras. Fruto carnudo amarelo ou vermelho com a castanha pendurada embaixo.",pl:"Muda de cajueiro-anão enxertado, espaço 7 × 7 m.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Muito resistente à seca.",so:"Até areia pobre serve; esterco na cova.",co:"Anão: a partir de 2 anos.",pr:"Antracnose, mosca-branca.",dc:"A castanha crua tem óleo que queima a pele: asse ao ar livre, longe do rosto."},
+{n:"Citros (laranja, limão, tangerina)",c:"Citrus spp.",t:"fruteira",h:"arvore",f:"larga",k:["verde","amarelo","laranja","branco"],rec:"Folha brilhante com cheiro cítrico ao amassar, talo com 'asinha'. Muitos têm espinhos. Flor branca perfumada.",pl:"Muda enxertada (enxerto acima do solo), espaço 6 × 4 m.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Regular; não encharcar.",so:"Drenado. Composto e esterco 3× por ano.",co:"3–4 anos (limão pode dar com 2).",pr:"Pulgão, minadora (riscos nas folhas novas), cochonilha e fumagina (pó preto).",dc:"Retire brotos que saem abaixo do enxerto."},
+{n:"Coco",c:"Cocos nucifera",t:"fruteira",h:"palmeira",f:"recortada",k:["verde","amarelo","marrom"],rec:"Palmeira de tronco único, folhas como penas muito grandes, cachos de cocos.",pl:"Coco germinado ou muda, cova de 80 cm, espaço 7,5 m em triângulo.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Gosta de água; irrigar no verão.",so:"Arenoso e fundo. Esterco e cinza ao redor.",co:"Anão: 2–3 anos.",pr:"Broca-do-olho, lagarta-das-folhas.",dc:"Não plante perto de casa: folhas e cocos caem."},
+{n:"Goiaba",c:"Psidium guajava",t:"fruteira",h:"arvore",f:"larga",k:["verde","amarelo"],rec:"Tronco liso que solta a casca em placas. Folhas com nervuras bem marcadas, cheirosas ao amassar.",pl:"Muda em cova de 50 cm, espaço 6 × 5 m.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Regular.",so:"Qualquer solo drenado; esterco 2× por ano.",co:"A partir de 2 anos.",pr:"Bicho-da-goiaba (mosca), ferrugem.",dc:"Ensaque as frutas ainda pequenas com saquinho de papel para evitar o bicho."},
+{n:"Acerola",c:"Malpighia emarginata",t:"fruteira",h:"arbusto",f:"larga",k:["vermelho","laranja","roxo"],rec:"Arbusto com folhas pequenas e brilhantes, flor rosa pequena, frutinhas vermelhas com 3 gomos.",pl:"Muda em cova de 40 cm, espaço 4 × 4 m. Também vai em vaso grande.",ep:"Ano todo com rega.",luz:"Sol pleno.",ag:"Regular; dá várias safras por ano com água.",so:"Drenado; esterco a cada 3 meses.",co:"A partir de 1 ano.",pr:"Pulgão, nematoides.",dc:"Colha madura e consuma logo: perde vitamina rápido."},
+{n:"Graviola",c:"Annona muricata",t:"fruteira",h:"arvore",f:"larga",k:["verde"],rec:"Folhas brilhantes de cheiro forte. Fruto grande verde com 'espinhos' moles.",pl:"Muda em cova de 50 cm, espaço 5 × 5 m.",ep:"Início das chuvas.",luz:"Sol.",ag:"Regular.",so:"Fértil e drenado.",co:"3 anos.",pr:"Broca-do-fruto e broca-do-tronco.",dc:"Polinizar à mão melhora o formato dos frutos."},
+{n:"Pupunha",c:"Bactris gasipaes",t:"fruteira",h:"palmeira",f:"recortada",k:["vermelho","amarelo","laranja"],rec:"Palmeira em touceira com tronco cheio de espinhos pretos. Cachos de frutos vermelhos ou amarelos.",pl:"Mudas em covas de 40 cm, espaço 5 × 5 m.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Gosta de umidade, sem encharcar.",so:"Drenado; composto 2× por ano.",co:"3–4 anos. O fruto é comido cozido.",pr:"Broca-do-estipe.",dc:"Também dá palmito sem matar a touceira."},
+{n:"Tomate",c:"Solanum lycopersicum",t:"horta",h:"erva",f:"recortada",k:["vermelho","amarelo","verde"],rec:"Folhas divididas em folíolos, com pelinhos e cheiro forte. Flor amarela pequena em cachos.",pl:"Semear em bandeja; transplantar com 25–30 dias. Espaço 50 × 100 cm, com tutor (estaca).",ep:"Melhor no verão (jun–out). Na chuva, só em cultivo coberto.",luz:"Sol pleno.",ag:"Regar no pé todo dia, sem molhar as folhas.",so:"Fofo e rico. Composto na cova; cálcio (casca de ovo moída) evita fundo preto.",co:"90–120 dias.",pr:"Requeima (manchas escuras), traça, mosca-branca, fundo preto.",dc:"Tire os brotos que nascem entre a folha e o caule (desbrota)."},
+{n:"Pimenta (de-cheiro, malagueta)",c:"Capsicum spp.",t:"horta",h:"arbusto",f:"larga",k:["vermelho","amarelo","verde","laranja","branco"],rec:"Arbusto baixo, folha lisa e pontuda, flor branca pequena virada para baixo, frutos coloridos.",pl:"Semear em bandeja; transplantar com 30–40 dias. Espaço 50 × 80 cm. Vai bem em vaso.",ep:"Ano todo; evite o auge da chuva.",luz:"Sol pleno.",ag:"Regular.",so:"Composto e esterco.",co:"90–120 dias; produz por meses.",pr:"Pulgão, ácaro, antracnose.",dc:"Colha sempre: quanto mais colhe, mais produz."},
+{n:"Alface",c:"Lactuca sativa",t:"horta",h:"erva",f:"larga",k:["verde","roxo"],rec:"Roseta baixa de folhas macias, lisas ou crespas. Solta líquido branco quando quebra.",pl:"Semear em bandeja; transplantar com 25 dias. Espaço 25 × 25 cm.",ep:"Melhor no período menos chuvoso; na chuva, canteiro alto e coberto.",luz:"Sol da manhã; meia-sombra no calor forte.",ag:"Todo dia, de manhã ou fim de tarde.",so:"Fofo e muito rico em composto.",co:"45–60 dias.",pr:"Lesmas, pulgão, queima por excesso de chuva.",dc:"Use variedades para calor (ex.: crespa de verão); no calor ela 'pendoa' e amarga."},
+{n:"Couve",c:"Brassica oleracea var. acephala",t:"horta",h:"erva",f:"larga",k:["verde"],rec:"Folhas grandes, grossas, verde-azuladas com cera; caule que cresce para cima.",pl:"Brotos laterais enraizados ou sementes. Espaço 50 × 80 cm.",ep:"Ano todo; melhor fora do auge da chuva.",luz:"Sol pleno ou meia-sombra.",ag:"Regular.",so:"Rico; composto a cada 2 meses.",co:"60–80 dias; colha as folhas de baixo por meses.",pr:"Lagarta-da-couve, pulgão (calda de sabão).",dc:"Plante coentro ou cebolinha perto: atrapalha as pragas."},
+{n:"Cebolinha",c:"Allium fistulosum",t:"tempero",h:"erva",f:"estreita",k:["verde","branco"],rec:"Folhas finas, ocas por dentro, cheiro de cebola. Forma touceira.",pl:"Divida uma touceira e plante as mudinhas a 15 cm.",ep:"Ano todo.",luz:"Sol ou meia-sombra.",ag:"Regular.",so:"Composto.",co:"60 dias; corte a 3 cm do chão e rebrota.",pr:"Tripes, podridão em solo encharcado.",dc:"A raiz da cebolinha comprada, plantada, rebrota."},
+{n:"Coentro",c:"Coriandrum sativum",t:"tempero",h:"erva",f:"recortada",k:["verde","branco"],rec:"Folhas recortadas como salsinha, cheiro marcante. Flor branca em guarda-chuva.",pl:"Semeadura direta: amasse a semente (são 2 em uma), 1 cm de fundura, linhas a 20 cm.",ep:"Ano todo; na chuva forte, canteiro coberto.",luz:"Sol.",ag:"Todo dia.",so:"Fofo com composto.",co:"30–40 dias.",pr:"Queima por fungos em excesso de chuva.",dc:"Semeie um pouco a cada 15 dias para ter sempre."},
+{n:"Chicória-do-pará",c:"Eryngium foetidum",t:"tempero",h:"erva",f:"estreita",k:["verde"],rec:"Roseta de folhas compridas com borda serrilhada de espinhos moles; cheiro forte de coentro.",pl:"Sementes ou mudas a 20 cm.",ep:"Ano todo.",luz:"Meia-sombra (folhas maiores e macias).",ag:"Regular, gosta de umidade.",so:"Rico em matéria orgânica.",co:"60–80 dias.",pr:"Poucas.",dc:"Corte o pendão (haste de flor) para continuar dando folha."},
+{n:"Jambu",c:"Acmella oleracea",t:"tempero",h:"erva",f:"larga",k:["amarelo","verde"],rec:"Rasteiro, folhas em forma de coração, flor amarela redonda como botão. Adormece a boca.",pl:"Estacas ou sementes, espaço 25 × 25 cm.",ep:"Ano todo; adora a época da chuva.",luz:"Meia-sombra ou sol da manhã.",ag:"Muita água.",so:"Rico em composto.",co:"40–60 dias.",pr:"Lagartas, cochonilha.",dc:"Colha com flor: é quando mais 'treme'."},
+{n:"Alfavaca / manjericão",c:"Ocimum spp.",t:"tempero",h:"arbusto",f:"larga",k:["branco","roxo"],rec:"Caule quadrado, folhas muito cheirosas, flores em espigas brancas ou roxas.",pl:"Sementes ou estacas de 10 cm; espaço 40 cm.",ep:"Ano todo.",luz:"Sol.",ag:"Regular.",so:"Composto.",co:"50–60 dias.",pr:"Pulgão, lesmas.",dc:"Corte as flores para a planta durar e dar mais folha."},
+{n:"Hortelã",c:"Mentha spp.",t:"medicinal",h:"erva",f:"larga",k:["verde","roxo"],rec:"Caule quadrado, folhas pequenas serrilhadas com cheiro refrescante. Espalha por ramos.",pl:"Pedaços de rama com raiz. Melhor em vaso ou canteiro separado.",ep:"Ano todo.",luz:"Meia-sombra.",ag:"Muita água.",so:"Rico e úmido.",co:"40 dias.",pr:"Ferrugem (pontinhos laranja).",dc:"Ela invade o canteiro: plante em vaso."},
+{n:"Capim-santo / capim-limão",c:"Cymbopogon citratus",t:"medicinal",h:"erva",f:"estreita",k:["verde"],rec:"Touceira de folhas compridas e ásperas que cortam a mão; cheiro de limão.",pl:"Divida a touceira; mudas a 60 cm.",ep:"Ano todo.",luz:"Sol.",ag:"Pouca.",so:"Qualquer.",co:"3–4 meses.",pr:"Raras.",dc:"Também protege a horta como bordadura."},
+{n:"Babosa",c:"Aloe vera",t:"medicinal",h:"erva",f:"suculenta",k:["verde","amarelo"],rec:"Folhas grossas cheias de gel, com espinhos na borda, em roseta.",pl:"Filhotes da base em vaso ou terra arenosa.",ep:"Ano todo.",luz:"Sol ou meia-sombra.",ag:"Pouca: só quando a terra secar.",so:"Arenoso e drenado.",co:"Folhas a partir de 1 ano.",pr:"Podridão por excesso de água.",dc:"Uso do gel na pele. Não ingira: o líquido amarelo da casca é tóxico.",al:true},
+{n:"Boldo",c:"Plectranthus barbatus",t:"medicinal",h:"arbusto",f:"larga",k:["roxo","azul"],rec:"Folhas grossas, aveludadas e serrilhadas, muito amargas.",pl:"Estacas de 15 cm.",ep:"Ano todo.",luz:"Sol ou meia-sombra.",ag:"Regular.",so:"Qualquer.",co:"Folhas em 3 meses.",pr:"Poucas.",dc:"Use com moderação. Gestantes e quem tem problema no fígado devem evitar.",al:true},
+{n:"Quiabo",c:"Abelmoschus esculentus",t:"horta",h:"arbusto",f:"recortada",k:["amarelo","verde"],rec:"Folhas grandes recortadas e ásperas. Flor amarela com centro roxo. Fruto verde comprido com quinas.",pl:"Semente direta (de molho 12 h), 2 cm de fundura, espaço 1 m × 40 cm.",ep:"Calor: ano todo, melhor no verão.",luz:"Sol pleno.",ag:"Regular.",so:"Composto.",co:"60–70 dias; colha a cada 2 dias, ainda novo.",pr:"Pulgão, oídio.",dc:"Fruto passado fica fibroso; colha com 10–12 cm."},
+{n:"Maxixe",c:"Cucumis anguria",t:"horta",h:"trepadeira",f:"recortada",k:["verde","amarelo"],rec:"Rasteiro ou trepador, folhas recortadas ásperas, flor amarela pequena, frutinho verde com espinhos moles.",pl:"Semente direta, espaço 1 × 1 m.",ep:"Ano todo; muito rústico.",luz:"Sol.",ag:"Regular.",so:"Composto.",co:"60 dias.",pr:"Vaquinha (besourinho), oídio.",dc:"Crescendo em cerca dá frutos mais limpos."},
+{n:"Pepino",c:"Cucumis sativus",t:"horta",h:"trepadeira",f:"larga",k:["verde","amarelo"],rec:"Trepadeira com gavinhas, folhas ásperas com 5 pontas rasas, flor amarela.",pl:"Semente direta ao pé de cerca, espaço 1 m × 50 cm.",ep:"Verão; na chuva, cuidado com fungos.",luz:"Sol.",ag:"Regular, no pé.",so:"Rico em composto.",co:"50–60 dias.",pr:"Oídio (pó branco), míldio, vaquinha.",dc:"Colha antes de amarelar."},
+{n:"Abóbora / jerimum",c:"Cucurbita spp.",t:"horta",h:"trepadeira",f:"larga",k:["amarelo","laranja","verde"],rec:"Rasteira de folhas enormes e ásperas, flor amarela grande em forma de sino.",pl:"3 sementes por cova adubada, espaço 3 × 3 m.",ep:"Início ou fim das chuvas.",luz:"Sol.",ag:"Regular.",so:"Bastante esterco na cova.",co:"90–120 dias.",pr:"Broca-das-cucurbitáceas, oídio.",dc:"Coloque palha sob os frutos para não apodrecerem no chão."},
+{n:"Melancia",c:"Citrullus lanatus",t:"horta",h:"trepadeira",f:"recortada",k:["verde"],rec:"Rasteira com folhas muito recortadas e peludinhas, flor amarela pequena.",pl:"Sementes em covas adubadas, espaço 3 × 2 m.",ep:"Verão (época seca). Em praias de rio, na vazante.",luz:"Sol pleno.",ag:"Regular, menos perto da colheita (fica mais doce).",so:"Arenoso; esterco na cova.",co:"80–90 dias. Pronta quando a gavinha perto do fruto seca.",pr:"Oídio, pulgão, mosca-branca.",dc:"Excesso de chuva na colheita deixa sem doce."},
+{n:"Feijão-caupi (de-corda)",c:"Vigna unguiculata",t:"grao",h:"trepadeira",f:"larga",k:["branco","roxo","verde"],rec:"Folhas em trio (3 folíolos), flor branca ou lilás, vagens muito compridas.",pl:"2–3 sementes por cova, espaço 50 × 25 cm.",ep:"Fim das chuvas (abr–jun) ou na vazante.",luz:"Sol.",ag:"Pouca; aguenta seca.",so:"Pobre serve; aduba o solo com nitrogênio.",co:"Verde: 50–60 dias. Seco: 70–80 dias.",pr:"Pulgão, vaquinha, caruncho no grão guardado.",dc:"Plante depois do milho: devolve nitrogênio ao solo."},
+{n:"Milho",c:"Zea mays",t:"grao",h:"erva",f:"estreita",k:["amarelo","verde","marrom"],rec:"Caule reto com folhas compridas tipo fita; pendão no topo e espigas com 'cabelo' no meio do caule.",pl:"2 sementes por cova a 3–5 cm, espaço 80 × 20 cm. Plante em blocos, não em uma fileira só.",ep:"Início das chuvas.",luz:"Sol pleno.",ag:"Muita na floração.",so:"Fértil; esterco e cobertura com nitrogênio aos 30 dias.",co:"Verde: 80–90 dias. Seco: 110–120 dias.",pr:"Lagarta-do-cartucho (furos no 'olho': catar ou neem).",dc:"Plantar em bloco garante que as espigas se encham."},
+{n:"Batata-doce",c:"Ipomoea batatas",t:"raiz",h:"trepadeira",f:"larga",k:["roxo","branco"],rec:"Rasteira, folha em forma de coração ou recortada, flor tipo corneta lilás.",pl:"Ramas de 30 cm com metade enterrada, em leiras. Espaço 80 × 30 cm.",ep:"Fim das chuvas ou com irrigação.",luz:"Sol.",ag:"Pouca.",so:"Arenoso e fofo; pouco nitrogênio.",co:"4–5 meses.",pr:"Broca, gorgulho.",dc:"Folhas novas também se comem refogadas."},
+{n:"Cenoura",c:"Daucus carota",t:"raiz",h:"erva",f:"recortada",k:["verde","laranja"],rec:"Folhas muito finas e recortadas como renda; raiz laranja.",pl:"Semeadura direta em sulcos de 1 cm, linhas a 25 cm; desbaste deixando 7 cm.",ep:"Período menos chuvoso.",luz:"Sol.",ag:"Regular.",so:"Muito fofo, sem pedras, com composto curtido.",co:"90–110 dias.",pr:"Queima das folhas (fungo), nematoides.",dc:"Esterco fresco faz a raiz bifurcar: use bem curtido."},
+{n:"Urucum",c:"Bixa orellana",t:"fruteira",h:"arbusto",f:"larga",k:["vermelho","rosa","marrom"],rec:"Folhas em forma de coração, flor rosa, cachos de cápsulas vermelhas com espinhos moles e sementes vermelhas.",pl:"Sementes ou mudas, espaço 5 × 4 m.",ep:"Início das chuvas.",luz:"Sol.",ag:"Pouca.",so:"Qualquer drenado.",co:"1,5–2 anos.",pr:"Oídio.",dc:"As sementes dão o colorau."},
+{n:"Pimenta-do-reino",c:"Piper nigrum",t:"tempero",h:"trepadeira",f:"larga",k:["verde","vermelho"],rec:"Trepadeira que se agarra em estaca, folhas brilhantes em coração, cachinhos de bolinhas verdes que ficam vermelhas.",pl:"Estacas enraizadas ao pé de tutor (estaca viva de gliricídia), espaço 2,5 × 2 m.",ep:"Início das chuvas.",luz:"Sol ou meia-sombra.",ag:"Regular.",so:"Fértil e drenado; muita matéria orgânica.",co:"2–3 anos.",pr:"Fusariose (amarela e seca a planta): grande problema no Pará. Use mudas sadias.",dc:"Não plante em área com histórico de fusariose."},
+{n:"Espada-de-são-jorge",c:"Dracaena trifasciata",t:"ornamental",h:"erva",f:"estreita",k:["verde","amarelo"],rec:"Folhas duras, em pé, com faixas verde-claras e escuras, às vezes borda amarela.",pl:"Divisão de touceira ou pedaços de folha.",ep:"Ano todo.",luz:"De sombra a sol.",ag:"Muito pouca.",so:"Drenado.",co:"—",pr:"Podridão por excesso de água.",dc:"Tóxica para cães, gatos e crianças se mastigada.",al:true},
+{n:"Comigo-ninguém-pode",c:"Dieffenbachia spp.",t:"ornamental",h:"erva",f:"larga",k:["verde","branco","amarelo"],rec:"Folhas grandes com manchas claras, caule grosso.",pl:"Estacas de caule.",ep:"Ano todo.",luz:"Meia-sombra.",ag:"Regular.",so:"Rico.",co:"—",pr:"Cochonilha.",dc:"Muito tóxica: a seiva queima a boca e a garganta. Longe de crianças e animais.",al:true},
+{n:"Rosa",c:"Rosa spp.",t:"ornamental",h:"arbusto",f:"recortada",k:["vermelho","rosa","branco","amarelo","laranja"],rec:"Arbusto com espinhos, folhas divididas em folíolos serrilhados.",pl:"Muda enxertada ou estaca; cova de 40 cm.",ep:"Fim das chuvas.",luz:"Pelo menos 6 h de sol.",ag:"Regular no pé.",so:"Rico; esterco e farinha de osso.",co:"Floresce o ano todo com poda.",pr:"Pulgão, mancha-negra, oídio.",dc:"Pode após cada florada, logo acima de uma folha de 5 folíolos."},
+{n:"Orquídea",c:"Orchidaceae",t:"ornamental",h:"erva",f:"suculenta",k:["branco","roxo","rosa","amarelo"],rec:"Folhas grossas, raízes aéreas prateadas, às vezes bulbos na base.",pl:"Vaso com casca de pinus/carvão ou amarrada em tronco.",ep:"Ano todo.",luz:"Luz forte sem sol direto do meio-dia.",ag:"Quando o substrato secar; nunca deixe água parada.",so:"Substrato arejado, sem terra.",co:"Floresce 1–2 vezes por ano.",pr:"Cochonilha, podridão.",dc:"Raiz verde = molhada; prateada = hora de regar."},
+{n:"Samambaia",c:"Nephrolepis spp.",t:"ornamental",h:"erva",f:"recortada",k:["verde"],rec:"Folhas compridas e arqueadas, muito divididas; sem flor.",pl:"Divisão de touceira.",ep:"Ano todo.",luz:"Sombra ou luz indireta.",ag:"Frequente; gosta de umidade.",so:"Rico e leve.",co:"—",pr:"Cochonilha.",dc:"Folhas secando nas pontas = ar seco ou pouca água."}
+];
+const TIPOS={raiz:"Raízes",fruteira:"Frutas",horta:"Horta",tempero:"Temperos",medicinal:"Medicinais",grao:"Grãos",ornamental:"Ornamentais"};
+const PROB=[
+{s:"Folhas amarelando (as de baixo)",c:"Falta de nitrogênio ou folhas velhas.",r:"Adube com esterco curtido, composto ou chorume diluído (1 para 10 de água)."},
+{s:"Folhas amarelas e terra sempre molhada",c:"Excesso de água; raízes sem ar.",r:"Regue menos, melhore a drenagem, faça canteiro alto ou leirão. Vaso precisa de furo."},
+{s:"Folhas novas amarelas com nervuras verdes",c:"Falta de ferro ou magnésio, comum em solo muito ácido.",r:"Calcário (com antecedência) ou cinza em pouca quantidade e composto."},
+{s:"Planta murcha mesmo com terra úmida",c:"Podridão de raiz ou murcha por fungo/bactéria (fusariose).",r:"Arranque e queime a planta doente; não replante a mesma espécie no lugar. Evite encharcar."},
+{s:"Murcha no sol forte e volta à noite",c:"Calor e falta de água.",r:"Regue de manhã cedo, cubra o solo com palha (cobertura morta)."},
+{s:"Manchas escuras ou marrons nas folhas",c:"Fungos, favorecidos por chuva e folhas molhadas.",r:"Retire folhas doentes, regue só no pé, dê mais espaço; calda bordalesa."},
+{s:"Pó branco nas folhas",c:"Oídio (fungo).",r:"Leite diluído (1 de leite para 9 de água) pulverizado de manhã, 1× por semana."},
+{s:"Pontinhos ou bichinhos verdes/pretos nos brotos",c:"Pulgão.",r:"Calda de sabão neutro; jato de água; óleo de neem."},
+{s:"Pó preto como fuligem",c:"Fumagina: fungo que cresce no melado de pulgão e cochonilha.",r:"Combata o inseto; lave as folhas com água e sabão."},
+{s:"Bolinhas brancas ou cascudas no caule",c:"Cochonilha.",r:"Passe algodão com álcool; calda de sabão com óleo."},
+{s:"Folhas comidas ou com furos",c:"Lagartas, vaquinhas, lesmas (rastro brilhante).",r:"Cate à mão; lesmas: armadilha com casca de laranja ou cerveja. Neem para lagartas."},
+{s:"Riscos prateados ou brancos dentro da folha",c:"Larva minadora.",r:"Retire as folhas atacadas; neem."},
+{s:"Folhas com pontinhos claros e teia fina embaixo",c:"Ácaro, comum no verão seco.",r:"Molhe a planta por baixo das folhas; calda de enxofre ou neem."},
+{s:"Fundo do tomate preto",c:"Falta de cálcio e rega irregular.",r:"Rega constante, casca de ovo moída ou calcário no solo."},
+{s:"Planta não dá flor ou fruto",c:"Pouca luz, excesso de nitrogênio, falta de polinizadores ou planta jovem.",r:"Mais sol, menos adubo de folha e mais potássio (cinza, banana); não use veneno na floração."},
+{s:"Planta fina, alta e pálida",c:"Falta de luz (estiolada).",r:"Mude para lugar com mais sol."}
+];
+const REC=[
+{n:"Calda de sabão",d:"1 colher (sopa) de sabão neutro ralado ou detergente neutro em 1 litro de água. Pulverize no fim da tarde. Contra pulgão, cochonilha e mosca-branca."},
+{n:"Óleo de neem",d:"Siga a dose do rótulo (em geral 5 ml por litro com um pouco de sabão). Pulverize no fim da tarde, a cada 7 dias."},
+{n:"Calda bordalesa",d:"100 g de sulfato de cobre em 5 L de água + 100 g de cal virgem em outros 5 L; misture o cobre na cal, nunca o contrário. Use no mesmo dia. Contra fungos. Use luva e não aplique em plantas na colheita."},
+{n:"Chorume / biofertilizante",d:"Esterco fresco e água (1 para 3) fermentado 15–30 dias em balde com tampa. Use diluído 1 para 10 no solo."},
+{n:"Composto",d:"Camadas de restos verdes (cascas, capim) e secos (folhas, palha) com um pouco de terra, sempre úmido e revirado a cada 15 dias. Pronto em 2–3 meses."}
+];
+const CAL=[
+{m:"Dez – Fev (início das chuvas)",t:"Plante árvores frutíferas, açaí, cupuaçu, cacau, banana, mandioca, milho, maracujá, abóbora. Bom momento para mudas de longo prazo."},
+{m:"Mar – Mai (chuva forte)",t:"Jambu, chicória-do-pará, cebolinha, couve e hortelã vão bem. Folhosas como alface e coentro só em canteiro alto e coberto. Cuidado com fungos e encharcamento."},
+{m:"Abr – Jun (fim das chuvas)",t:"Feijão-caupi, batata-doce, rosas, cenoura. Prepare canteiros para o verão."},
+{m:"Jun – Nov (verão, mais seco)",t:"Melhor época para tomate, pimenta, pepino, melancia, alface, coentro, cenoura e quiabo, com irrigação. Na várzea, plantios de vazante (melancia, feijão, milho). Cubra o solo com palha."}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ficha=(p,extra="")=>`<details class="card"><summary><span><h3>${esc(p.n)}</h3><span class="sci">${esc(p.c)}</span> <span class="tag">${TIPOS[p.t]}</span>${p.al?'<span class="tag alert">cuidado</span>':''}</span>${extra}</summary>
+<dl><dt>Como reconhecer</dt><dd>${esc(p.rec)}</dd><dt>Como plantar</dt><dd>${esc(p.pl)}</dd><dt>Época</dt><dd>${esc(p.ep)}</dd><dt>Luz</dt><dd>${esc(p.luz)}</dd><dt>Água</dt><dd>${esc(p.ag)}</dd><dt>Solo e adubo</dt><dd>${esc(p.so)}</dd><dt>Colheita</dt><dd>${esc(p.co)}</dd><dt>Pragas</dt><dd>${esc(p.pr)}</dd><dt>Dica</dt><dd class="${p.al?'alert':''}">${esc(p.dc)}</dd></dl></details>`;
+
+/* abas */
+const show=t=>{document.querySelectorAll('main>section').forEach(s=>s.hidden=s.id!==t);document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t))};
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.t)});
+
+/* identificar */
+const Q=[
+{k:"h",q:"1. Como ela cresce?",o:[["arvore","Árvore"],["arbusto","Arbusto"],["erva","Planta baixa / touceira"],["trepadeira","Trepadeira ou rasteira"],["palmeira","Palmeira"]]},
+{k:"f",q:"2. Como é a folha?",o:[["larga","Larga, inteira"],["estreita","Comprida e fina"],["recortada","Recortada ou dividida"],["suculenta","Grossa, cheia de gel"]]},
+{k:"k",q:"3. Cor de flor ou fruto que aparece",o:[["amarelo","Amarelo"],["vermelho","Vermelho"],["laranja","Laranja"],["roxo","Roxo"],["rosa","Rosa"],["branco","Branco"],["verde","Verde"],["marrom","Marrom"]],m:1},
+{k:"t",q:"4. Para que você acha que serve?",o:[["fruteira","Dá fruta"],["horta","Verdura / legume"],["tempero","Tempero"],["medicinal","Chá / remédio"],["raiz","Raiz de comer"],["grao","Grão"],["ornamental","Enfeite"]]}
+];
+const ans={};
+$('#qs').innerHTML=Q.map(q=>`<div class="q">${q.q}</div><div class="chips" data-k="${q.k}" data-m="${q.m||0}">${q.o.map(o=>`<button data-v="${o[0]}">${o[1]}</button>`).join('')}</div>`).join('');
+$('#qs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const g=b.parentElement,k=g.dataset.k;
+ if(g.dataset.m==="1"){b.classList.toggle('on');ans[k]=[...g.querySelectorAll('.on')].map(x=>x.dataset.v)}
+ else{const on=!b.classList.contains('on');g.querySelectorAll('button').forEach(x=>x.classList.remove('on'));if(on)b.classList.add('on');ans[k]=on?b.dataset.v:null}});
+/* ---------- banco de fotos (IndexedDB, com reserva em memória) ---------- */
+let B=[];let idb=null;
+const abrir=()=>new Promise(res=>{try{const r=indexedDB.open('guia-roca',1);r.onupgradeneeded=()=>r.result.createObjectStore('fotos',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+const tx=(modo,fn)=>new Promise(res=>{if(!idb)return res();try{const t=idb.transaction('fotos',modo);const st=t.objectStore('fotos');const r=fn(st);t.oncomplete=()=>res(r&&r.result);t.onerror=()=>res()}catch(e){res()}});
+const putB=r=>tx('readwrite',s=>s.put(r));
+const delB=id=>tx('readwrite',s=>s.delete(id));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+/* imagem: reduz e extrai "impressão digital" (cores + formato) para comparar sem internet */
+const carregar=f=>new Promise((res,rej)=>{const img=new Image();img.onload=()=>res(img);img.onerror=rej;img.src=typeof f==='string'?f:URL.createObjectURL(f)});
+const canv=(img,max)=>{const s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*s));c.height=Math.max(1,Math.round(img.height*s));c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c};
+const feat=img=>{
+ const c=document.createElement('canvas');c.width=32;c.height=32;const x=c.getContext('2d');
+ const m=Math.min(img.width,img.height);x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,32,32);
+ const d=x.getImageData(0,0,32,32).data,h=new Array(16).fill(0);
+ for(let i=0;i<d.length;i+=4){const r=d[i]/255,g=d[i+1]/255,b=d[i+2]/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),df=mx-mn,s=mx?df/mx:0;
+  if(s<.2||mx<.15){h[12+Math.min(3,Math.floor(mx*4))]++}else{let hu=mx===r?((g-b)/df)%6:mx===g?(b-r)/df+2:(r-g)/df+4;hu=(hu*60+360)%360;h[Math.floor(hu/30)%12]++}}
+ const tot=h.reduce((a,b)=>a+b,0);
+ const g=document.createElement('canvas');g.width=9;g.height=8;const y=g.getContext('2d');y.drawImage(c,0,0,9,8);const e=y.getImageData(0,0,9,8).data;let bits='';
+ for(let r=0;r<8;r++)for(let k=0;k<8;k++){const a=(r*9+k)*4,b=a+4;bits+=(e[a]+e[a+1]+e[a+2])>(e[b]+e[b+1]+e[b+2])?'1':'0'}
+ return{h:h.map(v=>+(v/tot).toFixed(4)),d:bits}};
+const simil=(a,b)=>{if(!a||!b)return 0;let hi=0;for(let i=0;i<16;i++)hi+=Math.min(a.h[i],b.h[i]);let ham=0;for(let i=0;i<64;i++)if(a.d[i]!==b.d[i])ham++;return .65*hi+.35*(1-ham/64)};
+
+let atual=null; /* {foto, blob, f} da foto escolhida */
+const campos=r=>[["Como reconhecer",r.reconhecer],["Como plantar",r.plantar],["Época",r.epoca],["Luz",r.luz],["Água",r.agua],["Solo e adubo",r.solo],["Colheita",r.colheita],["Pragas",r.pragas],["Na sua foto",r.problemas],["Cuidado",r.toxica],["Dica",r.dica]].filter(x=>x[1]&&String(x[1]).trim());
+const fichaB=(r,aberto)=>`<details class="card"${aberto?' open':''}><summary><span class="match" style="grid-template-columns:72px minmax(0,1fr)"><img src="${esc(r.foto)}" alt=""><span><h3>${esc(r.nome||'Sem nome')}</h3><span class="sci">${esc(r.cientifico||'')}</span><br><span class="mut">${new Date(r.data).toLocaleDateString('pt-BR')} · ${r.origem==='ia'?'identificada pela IA':r.origem==='plantnet'?'identificada pela Pl@ntNet':'salva por você'}${r.confianca?' · certeza '+esc(r.confianca):''}</span></span></span></summary>
+<dl>${campos(r).map(([k,v])=>`<dt>${k}</dt><dd${k==='Cuidado'?' class="alert"':''}>${esc(v)}</dd>`).join('')}</dl>
+<div class="row" style="margin-top:12px"><button class="b b2" data-a="guia" data-n="${esc(r.nome||'')}">Procurar no guia</button><button class="b b2" data-a="minha" data-id="${esc(r.id)}">Adicionar em Minhas plantas</button><button class="b b2" data-a="del" data-id="${esc(r.id)}">Apagar</button></div></details>`;
+
+const renderB=()=>{const q=norm($('#bbusca').value.trim());const l=B.filter(r=>!q||norm([r.nome,r.cientifico,r.reconhecer].join(' ')).includes(q));
+ $('#bcount').textContent=B.length?`${B.length} planta(s) no banco`:'';
+ $('#blista').innerHTML=l.length?l.map(r=>fichaB(r)).join(''):'<p class="mut">Ainda vazio. Identifique uma planta pela foto com internet e ela aparece aqui.</p>'};
+$('#bbusca').addEventListener('input',renderB);
+
+/* comparação offline com o banco */
+const compararOff=()=>{if(!atual)return;
+ if(!B.length){$('#offres').innerHTML='<div class="box mut">Seu banco de fotos ainda está vazio. Use a IA com internet para começar a salvar.</div>';return}
+ const r=B.map(x=>({x,s:simil(atual.f,x.f)})).sort((a,b)=>b.s-a.s).slice(0,3);
+ $('#offres').innerHTML=`<h3 style="margin-top:14px">Parecidas no seu banco (sem internet)</h3><p class="mut" style="margin:2px 0 6px">A comparação é por cor e formato da foto. Confira pela descrição.</p>`+
+  r.map(({x,s})=>`<div class="card match" data-id="${esc(x.id)}"><img src="${esc(x.foto)}" alt=""><span><h3>${esc(x.nome)}</h3><span class="sci">${esc(x.cientifico||'')}</span></span><span class="score">${Math.round(s*100)}%</span></div>`).join('')};
+$('#offres').addEventListener('click',e=>{const c=e.target.closest('.match');if(!c)return;const r=B.find(x=>x.id===c.dataset.id);if(r){$('#iares').innerHTML=fichaB(r,true);$('#iares').scrollIntoView({behavior:'smooth'})}});
+
+$('#idfoto').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const im=$('#idprev');im.src=URL.createObjectURL(f);im.hidden=false;$('#iares').innerHTML='';$('#iamsg').textContent='';
+ try{const img=await carregar(f);const c=canv(img,1024);const pequena=canv(img,480);
+  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.85));
+  atual={foto:pequena.toDataURL('image/jpeg',.72),blob,f:feat(img)};compararOff()}catch(err){$('#offres').innerHTML='<p class="mut">Não consegui ler essa imagem.</p>'}});
+
+/* identificação por IA (online) */
+let sample=null;
+const PROMPT=`Você é agrônomo especialista em plantas do Brasil, principalmente da Amazônia (Pará, região de Santarém). Identifique a planta da foto.
+Responda SOMENTE um JSON válido, sem texto fora dele, neste formato:
+{"planta":true,"nome":"nome popular no Brasil","cientifico":"nome científico","confianca":"alta|média|baixa","alternativas":"outras plantas parecidas, se houver dúvida","reconhecer":"","plantar":"","epoca":"melhor época de plantio na Amazônia","luz":"","agua":"","solo":"solo e adubação, de preferência orgânica","colheita":"","pragas":"pragas e doenças comuns e como combater de forma caseira","problemas":"o que dá para ver na foto de praga, doença ou falta de nutriente e o que fazer; vazio se a planta parece saudável","toxica":"se for tóxica para pessoas ou animais, avise; senão vazio","dica":""}
+Cada campo com no máximo 2 frases curtas, práticas, em português simples. Se não for uma planta ou a foto não der para ver, use "planta":false e explique em "dica".`;
+const lerJSON=t=>{const a=t.indexOf('{'),b=t.lastIndexOf('}');return JSON.parse(t.slice(a,b+1))};
+let motor=null;const PNK='guia-roca-plantnet';
+const getKey=()=>{try{return localStorage.getItem(PNK)||''}catch(e){return ''}};
+const CAMPOS=['nome','cientifico','confianca','reconhecer','plantar','epoca','luz','agua','solo','colheita','pragas','problemas','toxica','dica'];
+const salvarRes=async(r,origem)=>{const reg={id:uid(),data:Date.now(),origem,foto:atual.foto,f:atual.f};
+ CAMPOS.forEach(k=>reg[k]=r[k]==null?'':String(r[k]).slice(0,600));
+ if(r.alternativas&&String(r.alternativas).trim())reg.dica=(reg.dica?reg.dica+' ':'')+'Pode ser também: '+String(r.alternativas).slice(0,200);
+ B.unshift(reg);await putB(reg);renderB();
+ $('#iamsg').innerHTML='<span class="ok">Identificada e salva no seu banco.</span>';
+ $('#iares').innerHTML=fichaB(reg,true);$('#iares').scrollIntoView({behavior:'smooth'})};
+const doGuia=g=>g?{reconhecer:g.rec,plantar:g.pl,epoca:g.ep,luz:g.luz,agua:g.ag,solo:g.so,colheita:g.co,pragas:g.pr,toxica:g.al?g.dc:'',dica:g.al?'':g.dc}:{};
+const viaClaude=async()=>{let r;
+ if(typeof sample.json==='function'){r=await sample.json(PROMPT,{images:[atual.blob],modelTier:'default'})}
+ else{const o=await sample(PROMPT,{images:[atual.blob],modelTier:'default'});r=lerJSON(o.text)}
+ if(typeof r==='string')r=lerJSON(r);return r};
+const viaPlantNet=async()=>{const fd=new FormData();fd.append('images',atual.blob,'foto.jpg');fd.append('organs','auto');
+ const res=await fetch('https://my-api.plantnet.org/v2/identify/all?lang=pt&nb-results=3&api-key='+encodeURIComponent(getKey()),{method:'POST',body:fd});
+ if(res.status===404)return{planta:false,dica:'A Pl@ntNet não reconheceu nenhuma planta nessa foto. Tente mais perto, com boa luz, mostrando bem uma folha, flor ou fruto.'};
+ if(res.status===401||res.status===403)throw{code:'chave'};
+ if(res.status===429)throw{code:'rate_limited'};
+ if(!res.ok)throw{code:'erro'};
+ const j=await res.json(),rs=(j.results||[]).filter(x=>x&&x.species);if(!rs.length)return{planta:false};
+ const t=rs[0],sp=t.species,cien=sp.scientificNameWithoutAuthor||'',gen=((sp.genus||{}).scientificNameWithoutAuthor||cien.split(' ')[0]||'').toLowerCase();
+ const g=P.find(p=>p.c.split(' ')[0].toLowerCase()===gen);
+ const sc=+t.score||0,nome=(sp.commonNames&&sp.commonNames[0])||(g&&g.n)||cien;
+ const r=Object.assign({planta:true,nome,cientifico:cien,confianca:(sc>=.5?'alta':sc>=.2?'média':'baixa')+' ('+Math.round(sc*100)+'%)'},doGuia(g));
+ if(!g)r.dica='Essa planta ainda não está no guia offline'+((sp.family||{}).scientificNameWithoutAuthor?' (família '+sp.family.scientificNameWithoutAuthor+')':'')+'. Para os cuidados completos, identifique pelo app no link do Claude.';
+ r.alternativas=rs.slice(1).map(x=>((x.species.commonNames||[])[0]||x.species.scientificNameWithoutAuthor)+' ('+Math.round(x.score*100)+'%)').join(', ');
+ return r};
+$('#iabtn').addEventListener('click',async()=>{
+ if(!atual){$('#iamsg').textContent='Primeiro tire ou escolha uma foto.';return}
+ if(!navigator.onLine){$('#iamsg').textContent='Sem internet agora. Veja as parecidas do seu banco ou responda as perguntas.';return}
+ const btn=$('#iabtn');btn.disabled=true;$('#iamsg').textContent='Identificando… pode levar alguns segundos.';
+ try{const r=motor==='claude'?await viaClaude():await viaPlantNet();
+  if(!r||r.planta===false){$('#iamsg').textContent='';$('#iares').innerHTML=`<div class="box">${esc((r&&r.dica)||'Não consegui reconhecer uma planta nessa foto. Tente mais perto, com boa luz, mostrando folhas e, se tiver, flor ou fruto.')}</div>`;return}
+  await salvarRes(r,motor==='claude'?'ia':'plantnet')
+ }catch(err){const c=err&&err.code;$('#iamsg').textContent=c==='chave'?'A Pl@ntNet recusou a chave. Confira a chave e se este site está autorizado na sua conta (veja as instruções).':c==='rate_limited'?'Muitas identificações seguidas. Espere um pouco e tente de novo.':c==='not_granted'?'A identificação por IA não foi permitida neste aparelho.':'Não consegui identificar agora (sem conexão ou erro). Tente de novo mais tarde.'}
+ finally{btn.disabled=false}});
+const ligarPN=()=>{const box=$('#pnbox');box.hidden=false;$('#pnkey').value=getKey();$('#pndom').textContent=location.origin;
+ if(getKey()){motor='plantnet';$('#iainfo').textContent='Identificação pela Pl@ntNet ligada. Escolha a foto acima e toque no botão. O resultado fica salvo no seu banco.';$('#iabtn').hidden=false;box.open=false}
+ else{motor=null;$('#iainfo').textContent='Para identificar pela foto neste site, coloque uma vez a sua chave gratuita da Pl@ntNet aqui embaixo.';$('#iabtn').hidden=true;box.open=true}};
+$('#pnsave').addEventListener('click',()=>{const k=$('#pnkey').value.trim();try{k?localStorage.setItem(PNK,k):localStorage.removeItem(PNK)}catch(e){}ligarPN()});
+
+/* ações nos cartões do banco */
+const acoes=async e=>{const b=e.target.closest('button[data-a]');if(!b)return;e.preventDefault();const a=b.dataset.a;
+ if(a==='guia'){$('#busca').value=(b.dataset.n||'').split(/[\/(,]/)[0].trim();show('guia');renderLista();window.scrollTo(0,0)}
+ else if(a==='minha'){const r=B.find(x=>x.id===b.dataset.id);if(!r)return;M.unshift({id:uid(),nome:r.nome,dias:2,ult:hoje(),desde:Date.now(),foto:r.foto});save();renderM();b.textContent='Adicionada';b.disabled=true}
+ else if(a==='del'){if(!b.dataset.ok){b.dataset.ok=1;b.textContent='Toque de novo para apagar';return}B=B.filter(x=>x.id!==b.dataset.id);await delB(b.dataset.id);renderB();const d=b.closest('details');if(d&&d.parentElement.id==='iares')d.remove()}};
+$('#blista').addEventListener('click',acoes);$('#iares').addEventListener('click',acoes);
+
+/* exportar / importar para juntar os bancos */
+let downloads=null;
+$('#bexp').addEventListener('click',async()=>{
+ const data=JSON.stringify({app:'guia-roca',v:1,exportado:Date.now(),fotos:B,minhas:M});
+ const nome=`guia-roca-banco-${new Date().toISOString().slice(0,10)}.json`;
+ try{if(downloads){await downloads.save({filename:nome,data});$('#bmsg').textContent='Banco exportado.';return}}catch(err){$('#bmsg').textContent='O download foi cancelado.';return}
+ try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=nome;document.body.appendChild(a);a.click();a.remove();$('#bmsg').textContent='Banco exportado (veja seus downloads).'}catch(err){$('#bmsg').textContent='Não foi possível exportar aqui.'}});
+$('#bimp').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;
+ try{const j=JSON.parse(await f.text());if(j.app!=='guia-roca')throw 0;let nf=0,nm=0;
+  const okTxt=v=>typeof v==='string';
+  for(const r of (j.fotos||[])){if(!r||!okTxt(r.id)||B.some(x=>x.id===r.id))continue;if(!okTxt(r.foto)||!r.foto.startsWith('data:image/'))continue;B.push(r);await putB(r);nf++}
+  B.sort((a,b)=>b.data-a.data);
+  for(const m of (j.minhas||[])){if(!m||!okTxt(m.nome))continue;if(m.id&&M.some(x=>x.id===m.id))continue;if(m.foto&&!String(m.foto).startsWith('data:image/'))m.foto='';M.push(m);nm++}
+  save();renderB();renderM();$('#bmsg').textContent=`Importado: ${nf} foto(s) no banco e ${nm} planta(s) em Minhas plantas.`}
+ catch(err){$('#bmsg').textContent='Esse arquivo não é um banco do Guia da Roça.'}
+ e.target.value=''});
+$('label[for=bimp]').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#bimp').click()}});
+
+/* liga recursos online quando existirem */
+(async()=>{idb=await abrir();if(idb){B=(await tx('readonly',s=>s.getAll()))||[];B.sort((a,b)=>b.data-a.data)}renderB();
+ const use=window.claude&&window.claude.use;
+ if(!use){if(location.protocol==='file:'){$('#iainfo').textContent='Neste arquivo a identificação pela foto não funciona. Use o site do app ou o link do Claude com internet e depois "Juntar os bancos" para trazer as fotos para cá.'}else ligarPN();return}
+ const [s,d]=await Promise.all([use('sample').catch(()=>null),use('downloads').catch(()=>null)]);downloads=d;
+ let imgs=false;try{imgs=!!(s&&(await s.limits()).images)}catch(e){}
+ if(s&&imgs){sample=s;motor='claude';$('#iainfo').textContent='Escolha a foto acima e toque no botão. A resposta vem com nome, cuidados e o que dá para ver de problema na planta, e fica salva no seu banco.';$('#iabtn').hidden=false}
+ else ligarPN()})();
+/* app instalável e offline (no site) */
+let instalar=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instalar=e;$('#instbtn').hidden=false});
+$('#instbtn').addEventListener('click',async()=>{if(!instalar)return;instalar.prompt();try{await instalar.userChoice}catch(e){}instalar=null;$('#instbtn').hidden=true});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')&&!window.claude){navigator.serviceWorker.register('sw.js').catch(()=>{});try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}
+$('#idgo').addEventListener('click',()=>{
+ const any=ans.h||ans.f||ans.t||(ans.k&&ans.k.length);
+ if(!any){$('#idres').innerHTML='<p class="mut">Responda pelo menos uma pergunta.</p>';return}
+ const max=(ans.h?3:0)+(ans.f?3:0)+(ans.t?2:0)+((ans.k&&ans.k.length)?2:0);
+ const r=P.map(p=>{let s=0;if(ans.h&&p.h===ans.h)s+=3;if(ans.f&&p.f===ans.f)s+=3;if(ans.t&&p.t===ans.t)s+=2;
+  if(ans.k&&ans.k.length){const hit=ans.k.filter(c=>p.k.includes(c)).length;s+=2*hit/ans.k.length}return{p,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,5);
+ $('#idres').innerHTML=r.length?`<h2 style="margin-top:20px">Mais parecidas</h2><p class="mut">Abra e compare com a sua planta pela descrição "Como reconhecer".</p>`+r.map(x=>ficha(x.p,`<span class="score">${Math.round(100*x.s/max)}%</span>`)).join('')+`<p class="mut">Não achou? O guia tem ${P.length} plantas comuns. Para plantas fora da lista, a identificação por foto precisa de internet (ex.: apps como PlantNet ou Google Lens).</p>`
+  :'<p class="mut">Nenhuma planta do guia combina. Tente mudar alguma resposta.</p>';
+ $('#idres').scrollIntoView({behavior:'smooth'})});
+$('#idclr').addEventListener('click',()=>{for(const k in ans)delete ans[k];document.querySelectorAll('#qs .on').forEach(b=>b.classList.remove('on'));$('#idres').innerHTML='';$('#idprev').hidden=true;$('#idfoto').value='';$('#offres').innerHTML='';$('#iares').innerHTML='';$('#iamsg').textContent='';atual=null});
+
+/* guia */
+let filtro="";
+$('#filtros').innerHTML=`<button data-v="" class="on">Todas</button>`+Object.entries(TIPOS).map(([k,v])=>`<button data-v="${k}">${v}</button>`).join('');
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const renderLista=()=>{const q=norm($('#busca').value.trim());
+ const l=P.filter(p=>(!filtro||p.t===filtro)&&(!q||norm(Object.values(p).join(' ')).includes(q)));
+ $('#lista').innerHTML=l.length?l.map(p=>ficha(p)).join(''):'<p class="mut">Nada encontrado. Veja também a aba Problemas.</p>'};
+$('#busca').addEventListener('input',renderLista);
+$('#filtros').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filtro=b.dataset.v;document.querySelectorAll('#filtros button').forEach(x=>x.classList.toggle('on',x===b));renderLista()});
+renderLista();
+
+/* problemas */
+$('#probs').innerHTML=PROB.map(p=>`<details class="card"><summary><h3>${p.s}</h3></summary><dl><dt>Causa provável</dt><dd>${p.c}</dd><dt>O que fazer</dt><dd>${p.r}</dd></dl></details>`).join('');
+$('#receitas').innerHTML=REC.map(r=>`<div class="card"><h3>${r.n}</h3><p style="margin:6px 0 0">${r.d}</p></div>`).join('');
+$('#calbox').innerHTML=CAL.map(c=>`<div class="card"><h3>${c.m}</h3><p style="margin:6px 0 0">${c.t}</p></div>`).join('');
+
+/* minhas plantas */
+$('#nomes').innerHTML=P.map(p=>`<option value="${esc(p.n)}">`).join('');
+const KEY='guia-roca-minhas';
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+let M=load();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(M));return true}catch(e){$('#mmsg').textContent='Não foi possível salvar (memória cheia ou bloqueada).';return false}};
+const hoje=()=>{const d=new Date();d.setHours(0,0,0,0);return d.getTime()};
+const DIA=864e5;
+const renderM=()=>{
+ if(!M.length){$('#mlista').innerHTML='<p class="mut">Nenhuma planta salva ainda.</p>';return}
+ $('#mlista').innerHTML=M.map((m,i)=>{const prox=m.ult+m.dias*DIA,falta=Math.round((prox-hoje())/DIA);
+  const st=falta<=0?'<span class="due">Regar hoje</span>':`<span class="mut">Regar em ${falta} dia${falta>1?'s':''}</span>`;
+  const g=P.find(p=>norm(m.nome).includes(norm(p.n.split(' ')[0])));
+  return `<div class="card mine">${m.foto?`<img src="${m.foto}" alt="">`:'<div class="ph"></div>'}<div><h3>${esc(m.nome)}</h3>${st}
+  <p class="mut" style="margin:4px 0">Desde ${new Date(m.desde).toLocaleDateString('pt-BR')} · rega a cada ${m.dias} dia(s)${g?' · '+esc(g.ag):''}</p>
+  <div class="row"><button class="b" data-a="regar" data-i="${i}">Reguei hoje</button><button class="b b2" data-a="del" data-i="${i}">Remover</button></div></div></div>`}).join('')};
+const reduz=f=>new Promise(res=>{if(!f)return res('');const img=new Image();img.onload=()=>{const s=Math.min(1,480/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.7))};img.onerror=()=>res('');img.src=URL.createObjectURL(f)});
+$('#madd').addEventListener('click',async()=>{const nome=$('#mnome').value.trim();if(!nome){$('#mmsg').textContent='Dê um nome para a planta.';return}
+ const foto=await reduz($('#mfoto').files[0]);M.unshift({id:uid(),nome,dias:Math.max(1,+$('#mdias').value||2),ult:hoje(),desde:Date.now(),foto});
+ if(save()){$('#mmsg').textContent='Planta salva.';$('#mnome').value='';$('#mfoto').value=''}renderM()});
+$('#mlista').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;
+ if(b.dataset.a==='regar')M[i].ult=hoje();else if(b.dataset.a==='del'){if(b.dataset.ok){M.splice(i,1)}else{b.dataset.ok=1;b.textContent='Toque de novo para remover';return}}
+ save();renderM()});
+renderM();
+}
+</script>
+</body>
+</html>
